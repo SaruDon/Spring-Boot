@@ -27,12 +27,10 @@ public class DepartmentEntity {
     @JoinColumn(name = "department_manager")
     private EmployeeEntity manager;
 
-    @OneToMany(mappedBy = "workerDepartment",fetch = FetchType.LAZY)
-    @JsonIgnore
+    @OneToMany(mappedBy = "workerDepartment")
     private Set<EmployeeEntity> workers;
 
     @ManyToMany(mappedBy = "freelanceDepartments")
-    @JsonIgnore
     private Set<EmployeeEntity> freelancers;
 
 

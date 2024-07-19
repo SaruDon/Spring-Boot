@@ -10,6 +10,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Data
 @Setter
 @Entity
 @Builder
@@ -25,6 +26,13 @@ public class EmployeeEntity {
     @JsonIgnore
     private DepartmentEntity managedDepartment;
 
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "worker_department_id")
+    @JsonIgnore
+    private DepartmentEntity workerDepartment;
+
+
     @ManyToMany
     @JoinTable(
             name = "freelance_department_mapping",
@@ -35,9 +43,6 @@ public class EmployeeEntity {
     private Set<DepartmentEntity> freelanceDepartments;
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "worker_department_id", referencedColumnName = "id")
-    @JsonIgnore
-    private DepartmentEntity workerDepartment;
+
 
 }
