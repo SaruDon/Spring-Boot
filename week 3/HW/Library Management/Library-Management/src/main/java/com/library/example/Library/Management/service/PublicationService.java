@@ -54,7 +54,7 @@ public class PublicationService {
                     // Update authors in the publication
                     Author author = book.getAuthor();
                     publication.getAuthors().add(author);
-                    author.getPublications().add(publication);
+                    author.getPublicationsList().add(publication);
                     authorRepo.save(author);
 
                     return publication;

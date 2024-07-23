@@ -7,6 +7,7 @@ import com.fcrit.studentsexample.Student.Management.repository.StudentRepository
 import com.fcrit.studentsexample.Student.Management.repository.SubjectRepo;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -43,6 +44,10 @@ public class StudentService {
 
                         }
                 )).orElse(null);
+    }
+
+    public List<Student> getAllStudent() {
+        return studentRepository.findAll();
     }
 
 //    public Student assignSubjectToStudent(Long studentId, Long subjectId) {

@@ -1,8 +1,11 @@
 package com.fcrit.studentsexample.Student.Management.controllers;
 
 import com.fcrit.studentsexample.Student.Management.entity.Professor;
+import com.fcrit.studentsexample.Student.Management.entity.Student;
 import com.fcrit.studentsexample.Student.Management.service.ProfessorService;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/professor")
@@ -27,6 +30,11 @@ public class ProfessorController {
     public Professor assignProfessorToSubject(@PathVariable Long professorId,
                                           @PathVariable Long subjectId){
         return professorService.assignProfessorToSubject(professorId,subjectId);
+    }
+
+    @GetMapping
+    public List<Professor> getAllProfessor(){
+        return professorService.getAllProfessor();
     }
 
 

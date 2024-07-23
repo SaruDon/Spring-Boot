@@ -1,3 +1,4 @@
+
 package com.library.example.Library.Management.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -15,7 +16,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@JsonIgnoreProperties({"books", "publications"})
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -27,12 +27,10 @@ public class Book {
     private LocalDateTime bookReleaseDate;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "author_id")
     private Author author;
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "publication_id")
     private Publication publication;
 }

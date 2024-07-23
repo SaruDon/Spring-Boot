@@ -6,6 +6,8 @@ import com.fcrit.studentsexample.Student.Management.repository.ProfessorRepo;
 import com.fcrit.studentsexample.Student.Management.repository.SubjectRepo;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SubjectService {
 
@@ -24,5 +26,9 @@ public class SubjectService {
 
     public Subject createSubject(Subject subject) {
         return subjectRepo.save(subject);
+    }
+
+    public List<Subject> getAllSubjects() {
+        return subjectRepo.findAll();
     }
 }

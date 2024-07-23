@@ -19,11 +19,11 @@ public class RideRequestDto {
     private Long id;
 
 
-    private Point pickupLocation;
+    private PointDto pickupLocation;
 
-    private Point dropOffLocation;
+    private PointDto dropOffLocation;
 
-
+    @CreationTimestamp
     private LocalDateTime requestedTime;
 
     private RiderDto rider;

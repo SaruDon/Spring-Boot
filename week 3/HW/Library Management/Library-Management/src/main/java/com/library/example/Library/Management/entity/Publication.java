@@ -1,3 +1,4 @@
+
 package com.library.example.Library.Management.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -10,12 +11,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@JsonIgnoreProperties({"books", "authors"})
 public class Publication {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -24,10 +25,9 @@ public class Publication {
     private String name;
 
     @OneToMany(mappedBy = "publication")
-    @JsonManagedReference
+    @JsonIgnore
     private List<Book> books;
 
-    @ManyToMany(mappedBy = "publications")
-    @JsonIgnore
+    @ManyToMany
     private List<Author> authors;
 }

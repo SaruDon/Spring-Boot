@@ -6,6 +6,8 @@ import com.fcrit.studentsexample.Student.Management.repository.StudentRepository
 import com.fcrit.studentsexample.Student.Management.service.StudentService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/student")
 public class StudentsController {
@@ -21,6 +23,10 @@ public class StudentsController {
         return studentService.getReferenceById(studentId);
     }
 
+    @GetMapping
+    public List<Student> getAllStudent(){
+        return studentService.getAllStudent();
+    }
 
     @PostMapping
     public Student createStudent(@RequestBody Student student){

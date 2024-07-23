@@ -8,6 +8,7 @@ import com.fcrit.studentsexample.Student.Management.repository.StudentRepository
 import com.fcrit.studentsexample.Student.Management.repository.SubjectRepo;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -58,5 +59,9 @@ public class ProfessorService {
                     professor.getStudentsList().add(student);
                     return professor;
                 })).orElse(null);
+    }
+
+    public List<Professor> getAllProfessor() {
+        return professorRepo.findAll();
     }
 }

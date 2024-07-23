@@ -1,3 +1,4 @@
+
 package com.library.example.Library.Management.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -10,7 +11,9 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -24,7 +27,6 @@ public class Author {
     private String name;
 
     @OneToMany(mappedBy = "author")
-    @JsonManagedReference
     private List<Book> books;
 
     @ManyToMany
@@ -34,6 +36,5 @@ public class Author {
             joinColumns = @JoinColumn(name = "author_id"),
             inverseJoinColumns = @JoinColumn(name = "publication_id")
     )
-    private List<Publication> publications;
-
+    private List<Publication> publicationsList;
 }

@@ -27,7 +27,6 @@ public class AuthorService {
         this.bookRepo = bookRepo;
     }
 
-
     public Optional<AuthorDto> getAuthorById(Long authorId) {
        return authorRepo.findById(authorId).map(author -> modelMapper.map(author,AuthorDto.class));
     }
