@@ -3,12 +3,17 @@ package com.uber.Uber.entities;
 import com.uber.Uber.entities.enums.PaymentMethod;
 import com.uber.Uber.entities.enums.RideStatus;
 import jakarta.persistence.*;
-import org.geolatte.geom.Point;
+import lombok.Getter;
+import lombok.Setter;
+
 import org.hibernate.annotations.CreationTimestamp;
+import org.locationtech.jts.geom.Point;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@Setter
 public class Ride {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +42,7 @@ public class Ride {
 
     private String otp;
 
-    private Double fair;
+    private Double fare;
 
     private LocalDateTime startedAt;
 

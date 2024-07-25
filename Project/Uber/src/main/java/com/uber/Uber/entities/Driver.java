@@ -3,7 +3,8 @@ package com.uber.Uber.entities;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.geolatte.geom.Point;
+import org.locationtech.jts.geom.Point;
+
 
 @Entity
 @Getter

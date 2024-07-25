@@ -24,7 +24,7 @@ public class Book {
     public ResponseEntity<BookDto> getBookById(@PathVariable Long bookId) {
         Optional<BookDto> bookDto = bookService.getBookById(bookId);
         return bookDto
-                .map(dto -> ResponseEntity.ok(dto))
+                .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 

@@ -1,8 +1,9 @@
 package com.uber.Uber.services;
 
-import org.geolatte.geom.Point;
+
+import org.locationtech.jts.geom.Point;
 
 public interface DistanceService {
 
-    double calculateDistance(Point src,Point dest);
+    double calculateDistance(Point src, Point dest);
 }

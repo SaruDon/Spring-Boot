@@ -17,6 +17,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static org.springframework.data.util.ReflectionUtils.findField;
+
 
 @Service
 public class StudentServices {
@@ -40,10 +42,10 @@ public class StudentServices {
     }
 
     public StudentsDto updateStudentById(StudentsDto studentsDto, Long studentId) {
-       StudentsEntity studentsEntityToChange = modelMapper.map(studentsDto,StudentsEntity.class);
-       studentsEntityToChange.setStudentId(studentId);
-       StudentsEntity studentsEntityToSave = studentRepository.save(studentsEntityToChange);
-       return  modelMapper.map(studentsEntityToSave,StudentsDto.class);
+        StudentsEntity studentsEntityToChange = modelMapper.map(studentsDto,StudentsEntity.class);
+        studentsEntityToChange.setStudentId(studentId);
+        StudentsEntity studentsEntityToSave = studentRepository.save(studentsEntityToChange);
+        return  modelMapper.map(studentsEntityToSave,StudentsDto.class);
     }
 
     public List<StudentsDto> getAllStudents(){
@@ -74,10 +76,25 @@ public class StudentServices {
 
         // Apply updates
         updates.forEach((fieldName, value) -> {
-            Field field = ReflectionUtils.findField(StudentsEntity.class, fieldName);
-            if (field != null) {
+            try {
+                // Find the field in StudentsEntity
+                Field field = ReflectionUtils.findRequiredField(StudentsEntity.class, fieldName);
+
+                // Make the field accessible
                 field.setAccessible(true);
-                ReflectionUtils.setField(field, studentToUpdate, value);
+
+                // Check if the value type matches the field type
+                if (field.getType().isInstance(value)) {
+                    // Set the field's value
+                    ReflectionUtils.setField(field, studentToUpdate, value);
+                } else {
+                    // Handle type mismatch, e.g., log a warning
+                    System.err.println("Type mismatch for field: " + fieldName);
+                }
+            } catch (Exception e) {
+                // Handle reflection exceptions
+                System.err.println("Error updating field: " + fieldName);
+                e.printStackTrace();
             }
         });
 
@@ -85,4 +102,6 @@ public class StudentServices {
         StudentsEntity updatedStudent = studentRepository.save(studentToUpdate);
         return modelMapper.map(updatedStudent, StudentsDto.class);
     }
+
+
 }

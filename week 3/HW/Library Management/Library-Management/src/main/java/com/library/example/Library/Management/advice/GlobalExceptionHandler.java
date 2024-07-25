@@ -1,6 +1,7 @@
 package com.library.example.Library.Management.advice;
 
 import com.library.example.Library.Management.exceptions.ResourceNotFoundException;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -8,9 +9,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.util.List;
-import java.util.stream.Collectors;
-
-import static com.fasterxml.jackson.databind.type.LogicalType.Collection;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -40,8 +38,8 @@ public class GlobalExceptionHandler {
                 .getBindingResult()
                 .getAllErrors()
                 .stream()
-                .map(error ->error.getDefaultMessage())
-                .collect(Collectors.toList());
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+                .toList();
 
         ApiError apiError = ApiError.builder()
                 .status(HttpStatus.BAD_REQUEST)

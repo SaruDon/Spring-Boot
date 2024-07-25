@@ -23,7 +23,7 @@ public class RideRequestDto {
 
     private PointDto dropOffLocation;
 
-    @CreationTimestamp
+
     private LocalDateTime requestedTime;
 
     private RiderDto rider;
@@ -31,4 +31,5 @@ public class RideRequestDto {
     private PaymentMethod paymentMethod;
 
     private RideRequestStatus rideRequestStatus;
+    private Double fare;
 }

@@ -5,7 +5,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.geolatte.geom.Point;
+import org.locationtech.jts.geom.Point;
+
 
 @Data
 @AllArgsConstructor
@@ -23,5 +24,5 @@ public class DriverDto {
 
     private String vehicleId;
 
-    private Point currentLocation;
+    private PointDto currentLocation;
 }
