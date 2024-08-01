@@ -3,7 +3,6 @@ package com.uber.Uber.services.impl;
 import com.uber.Uber.dto.DriverDto;
 import com.uber.Uber.dto.SignupDto;
 import com.uber.Uber.dto.UserDto;
-import com.uber.Uber.entities.Rider;
 import com.uber.Uber.entities.User;
 import com.uber.Uber.entities.enums.Role;
 import com.uber.Uber.exception.RunTimeConflictException;
@@ -12,8 +11,8 @@ import com.uber.Uber.services.AuthService;
 import com.uber.Uber.services.RiderService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 
@@ -35,6 +34,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    @Transactional
     public UserDto signup(SignupDto signupDto) {
         //while signup need to create things that user might user
         // for.eg wallet
