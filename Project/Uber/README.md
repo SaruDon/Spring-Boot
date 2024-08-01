@@ -1,10 +1,9 @@
 
 # Uber Backend Clone
+In this project, I developed an enterprise-level application with the best industry-level practices to build an end-to-end application that allows users to book a ride.
 
-In this project Idevelopedanenteriprise level application withthebest industry level practice to developanend tobackendapplicationthatallowsuserstobook a ride.
 
-
-## Low Level System Design
+## Low-Level System Design
 
   ![Screenshot from 2024-08-01 10-35-43](https://github.com/user-attachments/assets/e3c5db49-8516-46fc-bdb7-31a11165a4fe)
 
