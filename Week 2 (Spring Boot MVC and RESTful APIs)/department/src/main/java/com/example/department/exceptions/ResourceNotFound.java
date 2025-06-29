@@ -1,4 +1,8 @@
 package com.example.department.exceptions;
 
-public class ResouceNotFound {
+public class ResourceNotFound extends RuntimeException{
+    public ResourceNotFound(String message) {
+        super(message);
+    }
 }
+

@@ -45,8 +45,11 @@
       <change afterPath="$PROJECT_DIR$/../../uber/src/main/java/com/sarvesh/project/uber/uber/services/RideService.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../../uber/src/main/java/com/sarvesh/project/uber/uber/services/RiderService.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../College/src/main/java/com/example/College/entity/Department.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../College/src/main/java/com/example/College/entity/Employee.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../College/src/main/java/com/example/College/entity/Projects.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../Hibernate/src/main/java/com/example/Hibernate/entity/Product.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../Hibernate/src/main/resources/data.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../Week 2 (Spring Boot MVC and RESTful APIs)/springbootwebtutorial/src/main/java/com/fcrit/springbootwebtutorial/springbootwebtutorial/dto/EmployeeDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../Week 2 (Spring Boot MVC and RESTful APIs)/springbootwebtutorial/src/main/java/com/fcrit/springbootwebtutorial/springbootwebtutorial/dto/EmployeeDTO.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
