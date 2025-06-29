@@ -1,5 +1,6 @@
 package com.fcrit.springbootwebtutorial.springbootwebtutorial.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fcrit.springbootwebtutorial.springbootwebtutorial.annotations.EmployeeRoleValidation;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -44,6 +45,7 @@ public class EmployeeDTO {
     @PastOrPresent(message = "Date of joining can not in future")
     private LocalDate dateOfJoining;
 
+    @JsonProperty("isActive")
     @AssertTrue(message = "Employee should be active")
     private Boolean isActive;
 }

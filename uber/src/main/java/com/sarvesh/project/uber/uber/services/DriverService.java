@@ -1,4 +1,9 @@
 package com.sarvesh.project.uber.uber.services;
 
-public class DriverService {
+import org.springframework.stereotype.Service;
+
+@Service
+public interface DriverService {
+
+
 }
