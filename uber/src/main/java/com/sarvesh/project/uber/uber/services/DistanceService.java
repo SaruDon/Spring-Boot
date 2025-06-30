@@ -1,4 +1,8 @@
 package com.sarvesh.project.uber.uber.services;
 
-public class DIstanceService {
+import org.locationtech.jts.geom.Point;
+import org.springframework.stereotype.Service;
+
+public interface DistanceService {
+    double calculateDistance(Point src ,Point dest);
 }

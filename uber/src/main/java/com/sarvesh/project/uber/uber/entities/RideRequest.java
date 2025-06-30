@@ -20,16 +20,16 @@ public class RideRequest {
     private Long id;
 
     @Column(columnDefinition = "Geometry(Point,4326)")
-    Point pickUpLocation;
+    private Point pickUpLocation;
 
     @Column(columnDefinition = "Geometry(Point,4326)")
-    Point dropOffLocation;
+    private Point dropOffLocation;
 
     @CreationTimestamp
     private LocalDateTime requestedTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Rider ride;
+    private Rider rider; // one rider can have multiple ride request
 
     @Enumerated(EnumType.STRING)
     private RideRequestStatus rideRequestStatus;
@@ -38,6 +38,5 @@ public class RideRequest {
     private PaymentMethod paymentMethod;
 
     private Double Fare;
-
 
 }
