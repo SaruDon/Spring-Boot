@@ -1,5 +1,6 @@
 package com.sarvesh.project.uber.uber.dto;
 
+import com.sarvesh.project.uber.uber.entities.Driver;
 import com.sarvesh.project.uber.uber.entities.Rider;
 import com.sarvesh.project.uber.uber.entities.enums.PaymentMethod;
 import com.sarvesh.project.uber.uber.entities.enums.RideStatus;
@@ -17,9 +18,11 @@ public class RideDto {
 
     private Point dropOffLocation;
 
-    private LocalDateTime requestedTime;
+    private LocalDateTime createdTime;// Time at which ride is created
 
-    private Rider ride;
+    private RiderDto ride;
+
+    private DriverDto driver;
 
     private RideStatus rideStatus;
 
@@ -27,7 +30,7 @@ public class RideDto {
 
     private Double Fare;
 
-    private LocalDateTime startedAt;
+    private LocalDateTime startedAt;// Time at which ride starts
 
-    private LocalDateTime endedAt;
+    private LocalDateTime endedAt; // Time at which ride ends
 }

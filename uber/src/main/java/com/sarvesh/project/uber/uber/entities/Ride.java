@@ -15,13 +15,13 @@ public class Ride {
     private Long id;
 
     @Column(columnDefinition = "Geometry(Point,4326)")
-    Point pickUpLocation;
+    private Point pickUpLocation;
 
     @Column(columnDefinition = "Geometry(Point,4326)")
-    Point dropOffLocation;
+    private Point dropOffLocation;
 
     @CreationTimestamp
-    private LocalDateTime requestedTime;
+    private LocalDateTime createdTime;// Time at which ride is created
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Rider ride;
@@ -37,7 +37,7 @@ public class Ride {
 
     private Double Fare;
 
-    private LocalDateTime startedAt;
+    private LocalDateTime startedAt;// Time at which ride starts
 
-    private LocalDateTime endedAt;
+    private LocalDateTime endedAt; // Time at which ride ends
 }

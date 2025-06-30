@@ -1,4 +1,15 @@
-package com.sarvesh.project.uber.uber.config;
+package com.sarvesh.project.uber.uber.advices;
 
+import lombok.Builder;
+import lombok.Data;
+import org.springframework.http.HttpStatus;
+
+import java.util.List;
+
+@Data
+@Builder
 public class ApiError {
+    private HttpStatus httpStatus;
+    private String message;
+    private List<String> subErrors;
 }

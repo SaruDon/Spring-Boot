@@ -1,7 +1,7 @@
 package com.sarvesh.project.uber.uber.exceptions;
 
-public class RunTimeConfilctException extends RuntimeException {
-    public RunTimeConfilctException(String message) {
+public class RuntimeConflictException extends RuntimeException {
+    public RuntimeConflictException(String message) {
         super(message);
     }
 }
