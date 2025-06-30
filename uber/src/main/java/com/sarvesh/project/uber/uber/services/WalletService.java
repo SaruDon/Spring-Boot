@@ -1,4 +1,4 @@
 package com.sarvesh.project.uber.uber.services;
 
-public class DIstanceService {
+public interface WalletService {
 }
