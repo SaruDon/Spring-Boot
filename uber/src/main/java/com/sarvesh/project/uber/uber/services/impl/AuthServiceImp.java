@@ -3,7 +3,6 @@ package com.sarvesh.project.uber.uber.services.impl;
 import com.sarvesh.project.uber.uber.dto.DriverDto;
 import com.sarvesh.project.uber.uber.dto.SignupDto;
 import com.sarvesh.project.uber.uber.dto.UserDto;
-import com.sarvesh.project.uber.uber.entities.Rider;
 import com.sarvesh.project.uber.uber.entities.User;
 import com.sarvesh.project.uber.uber.entities.enums.Role;
 import com.sarvesh.project.uber.uber.exceptions.RuntimeConflictException;
@@ -11,11 +10,10 @@ import com.sarvesh.project.uber.uber.repositories.UserRepository;
 import com.sarvesh.project.uber.uber.services.AuthService;
 import com.sarvesh.project.uber.uber.services.RiderService;
 import com.sarvesh.project.uber.uber.services.WalletService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Set;
 
@@ -36,6 +34,7 @@ public class AuthServiceImp implements AuthService {
     }
 
     @Override
+    @Transactional
     public UserDto signup(SignupDto signupDto) {
         User user = userRepository.findByEmail(signupDto.getEmail())
                 .orElse(null);

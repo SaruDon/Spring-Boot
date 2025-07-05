@@ -5,22 +5,28 @@ import com.sarvesh.project.uber.uber.entities.Rider;
 import com.sarvesh.project.uber.uber.entities.enums.PaymentMethod;
 import com.sarvesh.project.uber.uber.entities.enums.RideStatus;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.locationtech.jts.geom.Point;
 
 import java.time.LocalDateTime;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class RideDto {
 
     private Long id;
 
-    private Point pickUpLocation;
+    private PointDto pickUpLocation;
 
-    private Point dropOffLocation;
+    private PointDto dropOffLocation;
 
     private LocalDateTime createdTime;// Time at which ride is created
 
-    private RiderDto ride;
+    private RiderDto rider;
 
     private DriverDto driver;
 
