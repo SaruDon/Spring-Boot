@@ -8,11 +8,19 @@ import org.locationtech.jts.geom.PrecisionModel;
 
 public class GeometryUtil {
 
-    public static Point createPoint(PointDto pointDto){
-        GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(),4326);
-        Coordinate coordinate = new Coordinate(pointDto.getCoordinates()[0],
-                pointDto.getCoordinates()[1]
-        );
-        return geometryFactory.createPoint(coordinate);
+    private static final GeometryFactory GEOMETRY_FACTORY = new GeometryFactory(new PrecisionModel(), 4326);
+
+    public static Point createPoint(PointDto pointDto) {
+        if (pointDto == null) {
+            throw new IllegalArgumentException("PointDto cannot be null");
+        }
+
+        double[] coordinates = pointDto.getCoordinates();
+        if (coordinates == null || coordinates.length < 2) {
+            throw new IllegalArgumentException("Coordinates array must contain at least 2 elements (longitude, latitude)");
+        }
+
+        Coordinate coordinate = new Coordinate(coordinates[0], coordinates[1]);
+        return GEOMETRY_FACTORY.createPoint(coordinate);
     }
 }

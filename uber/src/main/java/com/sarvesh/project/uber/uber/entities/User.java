@@ -2,15 +2,15 @@ package com.sarvesh.project.uber.uber.entities;
 
 import com.sarvesh.project.uber.uber.entities.enums.Role;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Set;
 
 @Entity
 @Table(name = "app_user")
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
