@@ -1,7 +1,24 @@
 package com.sarvesh.project.uber.uber.services.impl;
 
+import com.sarvesh.project.uber.uber.dto.WalletTransactionDto;
+import com.sarvesh.project.uber.uber.entities.WalletTransaction;
+import com.sarvesh.project.uber.uber.repositories.WalletTransactionRepository;
+import com.sarvesh.project.uber.uber.services.WalletTransactionService;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
-public class WalletTransactionService {
+@RequiredArgsConstructor
+public class WalletTransactionServiceImpl implements WalletTransactionService {
+
+    private final WalletTransactionRepository walletTransactionRepository;
+
+    private final ModelMapper modelMapper;
+
+
+    @Override
+    public void createNewWalletTransaction(WalletTransaction walletTransaction) {
+        walletTransactionRepository.save(walletTransaction);
+    }
 }

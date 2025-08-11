@@ -38,5 +38,7 @@ public class RideDto {
 
     private LocalDateTime startedAt;// Time at which ride starts
 
+    private Integer otp;
+
     private LocalDateTime endedAt; // Time at which ride ends
 }

@@ -1,24 +1,25 @@
 package com.sarvesh.project.uber.uber.services;
 
-import com.sarvesh.project.uber.uber.dto.RideDto;
-import com.sarvesh.project.uber.uber.dto.RideRequestDto;
+import com.sarvesh.project.uber.uber.dto.*;
 import com.sarvesh.project.uber.uber.entities.Rider;
 import com.sarvesh.project.uber.uber.entities.User;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 public interface RiderService {
     RideRequestDto requestRide(RideRequestDto requestDto);
 
     RideDto cancelRide(Long rideId);
 
-    RideDto rateDriver(Long rideId, Integer rating);
+    DriverDto rateDriver(Long rideId,Double rating);
 
-    RideDto getMyProfile();
+    RiderDto getMyProfile();
 
-    List<RideDto> getAllMyRider();
+    Page<RideDto> getAllMyRide(PageRequest pageRequest);
 
     Rider createNewRider(User user);
 
     Rider getCurrentRider();
+
+    Rider getRiderById(Long riderId);
 }
