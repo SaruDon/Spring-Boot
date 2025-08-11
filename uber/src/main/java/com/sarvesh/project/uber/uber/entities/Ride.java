@@ -18,6 +18,12 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(
+        indexes ={
+                @Index(name = "idx_ride",columnList ="rider_id" ),
+                @Index(name = "idx_driver",columnList = "driver_id")
+        }
+)
 public class Ride {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -45,7 +51,7 @@ public class Ride {
     @Enumerated(EnumType.STRING)
     private PaymentMethod paymentMethod;
 
-    private Double Fare;
+    private Double fare;
 
     private LocalDateTime startedAt;// Time at which ride starts
 

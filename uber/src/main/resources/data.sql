@@ -51,7 +51,7 @@ INSERT INTO app_user (name, email, password) VALUES
 ('Tanay Goenka', 'tanay.goenka@example.com', 'password50');
 
 INSERT INTO user_role (user_id, role) VALUES
-(1, 'RIDER'),
+(1,'RIDER'),
 (2, 'RIDER'),
 (3, 'RIDER'),
 (4, 'RIDER'),
@@ -102,47 +102,99 @@ INSERT INTO user_role (user_id, role) VALUES
 (49, 'DRIVER'),
 (50, 'DRIVER');
 
-INSERT INTO rider (id, user_id, rating) VALUES (1,1,4.9);
+INSERT INTO rider (user_id, rating) VALUES (1,4.9);
 
-INSERT INTO driver (id, user_id, rating, available, current_location) VALUES
-(1, 11, 4.5, true, ST_GeomFromText('POINT(77.5946 12.9716)', 4326)),    -- Bangalore
-(2, 12, 4.7, true, ST_GeomFromText('POINT(72.8777 19.0760)', 4326)),    -- Mumbai
-(3, 13, 4.6, true, ST_GeomFromText('POINT(77.1025 28.7041)', 4326)),    -- Delhi
-(4, 14, 4.2, true, ST_GeomFromText('POINT(80.2707 13.0827)', 4326)),    -- Chennai
-(5, 15, 4.8, true, ST_GeomFromText('POINT(78.4867 17.3850)', 4326)),    -- Hyderabad
-(6, 16, 4.3, true, ST_GeomFromText('POINT(73.8567 18.5204)', 4326)),    -- Pune
-(7, 17, 4.5, true, ST_GeomFromText('POINT(77.5946 12.9716)', 4326)),
-(8, 18, 4.1, true, ST_GeomFromText('POINT(72.8777 19.0760)', 4326)),
-(9, 19, 4.6, true, ST_GeomFromText('POINT(77.1025 28.7041)', 4326)),
-(10, 20, 4.4, true, ST_GeomFromText('POINT(80.2707 13.0827)', 4326)),
-(11, 21, 4.5, true, ST_GeomFromText('POINT(78.4867 17.3850)', 4326)),
-(12, 22, 4.7, true, ST_GeomFromText('POINT(73.8567 18.5204)', 4326)),
-(13, 23, 4.2, true, ST_GeomFromText('POINT(77.5946 12.9716)', 4326)),
-(14, 24, 4.5, true, ST_GeomFromText('POINT(72.8777 19.0760)', 4326)),
-(15, 25, 4.6, true, ST_GeomFromText('POINT(77.1025 28.7041)', 4326)),
-(16, 26, 4.3, true, ST_GeomFromText('POINT(80.2707 13.0827)', 4326)),
-(17, 27, 4.8, true, ST_GeomFromText('POINT(78.4867 17.3850)', 4326)),
-(18, 28, 4.0, true, ST_GeomFromText('POINT(73.8567 18.5204)', 4326)),
-(19, 29, 4.7, true, ST_GeomFromText('POINT(77.5946 12.9716)', 4326)),
-(20, 30, 4.1, true, ST_GeomFromText('POINT(72.8777 19.0760)', 4326)),
-(21, 31, 4.4, true, ST_GeomFromText('POINT(77.1025 28.7041)', 4326)),
-(22, 32, 4.3, true, ST_GeomFromText('POINT(80.2707 13.0827)', 4326)),
-(23, 33, 4.5, true, ST_GeomFromText('POINT(78.4867 17.3850)', 4326)),
-(24, 34, 4.6, true, ST_GeomFromText('POINT(73.8567 18.5204)', 4326)),
-(25, 35, 4.5, true, ST_GeomFromText('POINT(77.5946 12.9716)', 4326)),
-(26, 36, 4.1, true, ST_GeomFromText('POINT(72.8777 19.0760)', 4326)),
-(27, 37, 4.7, true, ST_GeomFromText('POINT(77.1025 28.7041)', 4326)),
-(28, 38, 4.3, true, ST_GeomFromText('POINT(80.2707 13.0827)', 4326)),
-(29, 39, 4.2, true, ST_GeomFromText('POINT(78.4867 17.3850)', 4326)),
-(30, 40, 4.8, true, ST_GeomFromText('POINT(73.8567 18.5204)', 4326)),
-(31, 41, 4.4, true, ST_GeomFromText('POINT(77.5946 12.9716)', 4326)),
-(32, 42, 4.0, true, ST_GeomFromText('POINT(72.8777 19.0760)', 4326)),
-(33, 43, 4.9, true, ST_GeomFromText('POINT(77.1025 28.7041)', 4326)),
-(34, 44, 4.2, true, ST_GeomFromText('POINT(80.2707 13.0827)', 4326)),
-(35, 45, 4.6, true, ST_GeomFromText('POINT(78.4867 17.3850)', 4326)),
-(36, 46, 4.7, true, ST_GeomFromText('POINT(73.8567 18.5204)', 4326)),
-(37, 47, 4.5, true, ST_GeomFromText('POINT(77.5946 12.9716)', 4326)),
-(38, 48, 4.1, true, ST_GeomFromText('POINT(72.8777 19.0760)', 4326)),
-(39, 49, 4.8, true, ST_GeomFromText('POINT(77.1025 28.7041)', 4326)),
-(40, 50, 4.9, true, ST_GeomFromText('POINT(80.2707 13.0827)', 4326));
+INSERT INTO driver (user_id, rating, available, current_location) VALUES
+(11, 4.5, true, ST_GeomFromText('POINT(77.5946 12.9716)', 4326)),    -- Bangalore
+(12, 4.7, true, ST_GeomFromText('POINT(72.8777 19.0760)', 4326)),    -- Mumbai
+(13, 4.6, true, ST_GeomFromText('POINT(77.1025 28.7041)', 4326)),    -- Delhi
+(14, 4.2, true, ST_GeomFromText('POINT(80.2707 13.0827)', 4326)),    -- Chennai
+(15, 4.8, true, ST_GeomFromText('POINT(78.4867 17.3850)', 4326)),    -- Hyderabad
+(16, 4.3, true, ST_GeomFromText('POINT(73.8567 18.5204)', 4326)),    -- Pune
+(17, 4.5, true, ST_GeomFromText('POINT(77.5946 12.9716)', 4326)),
+(18, 4.1, true, ST_GeomFromText('POINT(72.8777 19.0760)', 4326)),
+(19, 4.6, true, ST_GeomFromText('POINT(77.1025 28.7041)', 4326)),
+(20, 4.4, true, ST_GeomFromText('POINT(80.2707 13.0827)', 4326)),
+(21, 4.5, true, ST_GeomFromText('POINT(78.4867 17.3850)', 4326)),
+(22, 4.7, true, ST_GeomFromText('POINT(73.8567 18.5204)', 4326)),
+(23, 4.2, true, ST_GeomFromText('POINT(77.5946 12.9716)', 4326)),
+(24, 4.5, true, ST_GeomFromText('POINT(72.8777 19.0760)', 4326)),
+(25, 4.6, true, ST_GeomFromText('POINT(77.1025 28.7041)', 4326)),
+(26, 4.3, true, ST_GeomFromText('POINT(80.2707 13.0827)', 4326)),
+(27, 4.8, true, ST_GeomFromText('POINT(78.4867 17.3850)', 4326)),
+(28, 4.0, true, ST_GeomFromText('POINT(73.8567 18.5204)', 4326)),
+(29, 4.7, true, ST_GeomFromText('POINT(77.5946 12.9716)', 4326)),
+(30, 4.1, true, ST_GeomFromText('POINT(72.8777 19.0760)', 4326)),
+(31, 4.4, true, ST_GeomFromText('POINT(77.1025 28.7041)', 4326)),
+(32, 4.3, true, ST_GeomFromText('POINT(80.2707 13.0827)', 4326)),
+(33, 4.5, true, ST_GeomFromText('POINT(78.4867 17.3850)', 4326)),
+(34, 4.6, true, ST_GeomFromText('POINT(73.8567 18.5204)', 4326)),
+(35, 4.5, true, ST_GeomFromText('POINT(77.5946 12.9716)', 4326)),
+(36, 4.1, true, ST_GeomFromText('POINT(72.8777 19.0760)', 4326)),
+(37, 4.7, true, ST_GeomFromText('POINT(77.1025 28.7041)', 4326)),
+(38, 4.3, true, ST_GeomFromText('POINT(80.2707 13.0827)', 4326)),
+(39, 4.2, true, ST_GeomFromText('POINT(78.4867 17.3850)', 4326)),
+(40, 4.8, true, ST_GeomFromText('POINT(73.8567 18.5204)', 4326)),
+(41, 4.4, true, ST_GeomFromText('POINT(77.5946 12.9716)', 4326)),
+(42, 4.0, true, ST_GeomFromText('POINT(72.8777 19.0760)', 4326)),
+(43, 4.9, true, ST_GeomFromText('POINT(77.1025 28.7041)', 4326)),
+(44, 4.2, true, ST_GeomFromText('POINT(80.2707 13.0827)', 4326)),
+(45, 4.6, true, ST_GeomFromText('POINT(78.4867 17.3850)', 4326)),
+(46, 4.7, true, ST_GeomFromText('POINT(73.8567 18.5204)', 4326)),
+(47, 4.5, true, ST_GeomFromText('POINT(77.5946 12.9716)', 4326)),
+(48, 4.1, true, ST_GeomFromText('POINT(72.8777 19.0760)', 4326)),
+(49, 4.8, true, ST_GeomFromText('POINT(77.1025 28.7041)', 4326)),
+(50, 4.9, true, ST_GeomFromText('POINT(80.2707 13.0827)', 4326));
 
+
+INSERT INTO wallet ( user_id, balance) VALUES
+(1, 10000),
+(2, 9500),
+(3, 8700),
+(4, 12000),
+(5, 11000),
+(6, 7300),
+(7, 5000),
+(8, 6600),
+(9, 8800),
+(10, 10200),
+(11, 7500),
+(12, 9400),
+(13, 12000),
+(14, 9900),
+(15, 8000),
+(16, 10500),
+(17, 11500),
+(18, 6800),
+(19, 7200),
+(20, 10000),
+(21, 9100),
+(22, 7600),
+(23, 8300),
+(24, 9200),
+(25, 8700),
+(26, 10100),
+(27, 11100),
+(28, 9900),
+(29, 9500),
+(30, 10400),
+(31, 8600),
+(32, 9300),
+(33, 9700),
+(34, 10700),
+(35, 8800),
+(36, 10800),
+(37, 11300),
+(38, 9400),
+(39, 10200),
+(40, 8800),
+(41, 11200),
+(42, 8500),
+(43, 10900),
+(44, 9400),
+(45, 10000),
+(46, 10500),
+(47, 9800),
+(48, 9900),
+(49, 8900),
+(50, 9500);

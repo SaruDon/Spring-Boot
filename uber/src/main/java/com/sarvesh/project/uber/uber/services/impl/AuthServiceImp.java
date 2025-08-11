@@ -3,15 +3,22 @@ package com.sarvesh.project.uber.uber.services.impl;
 import com.sarvesh.project.uber.uber.dto.DriverDto;
 import com.sarvesh.project.uber.uber.dto.SignupDto;
 import com.sarvesh.project.uber.uber.dto.UserDto;
+import com.sarvesh.project.uber.uber.entities.Driver;
 import com.sarvesh.project.uber.uber.entities.User;
 import com.sarvesh.project.uber.uber.entities.enums.Role;
 import com.sarvesh.project.uber.uber.exceptions.RuntimeConflictException;
 import com.sarvesh.project.uber.uber.repositories.UserRepository;
+import com.sarvesh.project.uber.uber.security.JwtService;
 import com.sarvesh.project.uber.uber.services.AuthService;
+import com.sarvesh.project.uber.uber.services.DriverService;
 import com.sarvesh.project.uber.uber.services.RiderService;
 import com.sarvesh.project.uber.uber.services.WalletService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,12 +32,27 @@ public class AuthServiceImp implements AuthService {
 
     private final RiderService riderService;
     private final WalletService walletService;
+    private final DriverService driverService;
+
+    private final PasswordEncoder passwordEncoder;
+
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
 
     private final ModelMapper modelMapper;
 
     @Override
-    public String login(String email, String password) {
-        return "";
+    public String[] login(String email, String password) {
+
+        Authentication  authentication =authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email,password));
+        User user =(User)  authentication.getPrincipal();
+
+        String accessToken = jwtService.generateAccessToken(user);
+        String refreshToken = jwtService.refreshToken(user);
+
+        String token [] = {accessToken,refreshToken};
+
+        return token;
     }
 
     @Override
@@ -44,6 +66,7 @@ public class AuthServiceImp implements AuthService {
         }
 
         User mappedUser = modelMapper.map(signupDto,User.class);
+        mappedUser.setPassword(passwordEncoder.encode(signupDto.getPassword()));
         mappedUser.setRole(Set.of(Role.RIDER));
         User savedUser =userRepository.save(mappedUser);
 
@@ -58,7 +81,23 @@ public class AuthServiceImp implements AuthService {
     }
 
     @Override
-    public DriverDto onBoardDriver(Long userId) {
-        return null;
+    public DriverDto onBoardDriver(Long userId,String vehicleId) {
+        User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeConflictException("User with id"+userId+"not found"));
+
+        if (!user.getRole().equals(Role.DRIVER)){
+            throw new RuntimeException("Unauthorized");
+        }
+
+        Driver driver = driverService.onBoardNewDriver(
+            Driver
+                    .builder()
+                    .rating(0.0D)
+                    .vehicleId(vehicleId)
+                    .available(true)
+                    .build()
+        );
+        user.getRole().add(Role.DRIVER);
+        userRepository.save(user);
+        return modelMapper.map(driver,DriverDto.class);
     }
 }

@@ -24,5 +24,4 @@ public class Rider {
     private User user;
 
     private Double rating;
-
 }

@@ -2,12 +2,14 @@ package com.sarvesh.project.uber.uber.advices;
 
 import com.sarvesh.project.uber.uber.exceptions.ResourceNotFoundException;
 import com.sarvesh.project.uber.uber.exceptions.RuntimeConflictException;
+import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.naming.AuthenticationException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,15 +27,15 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(RuntimeException.class)
-    private ResponseEntity<ApiError> handleRuntimeConflictException(RuntimeConflictException runtimeConflictException) {
-        ApiError apiError = ApiError
-                .builder()
+    @ExceptionHandler(RuntimeConflictException.class)
+    private ResponseEntity<ApiError> handleRuntimeConflictException(RuntimeConflictException ex) {
+        ApiError apiError = ApiError.builder()
                 .httpStatus(HttpStatus.CONFLICT)
-                .message(runtimeConflictException.getMessage())
+                .message(ex.getMessage())
                 .build();
-        return new ResponseEntity<>(apiError, HttpStatus.NOT_FOUND);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(apiError);
     }
+
 
     @ExceptionHandler(Exception.class)
     private ResponseEntity<ApiError> handleInternalServerError(Exception exception) {
@@ -59,5 +61,25 @@ public class GlobalExceptionHandler {
                 .subErrors(errors)
                 .build();
         return new ResponseEntity<>(apiError, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ApiError> handleAuthenticationError(AuthenticationException e) {
+        System.out.println("AuthenticationException caught: " + e.getClass().getName() + " - " + e.getMessage());
+        ApiError apiError = ApiError
+                .builder()
+                .httpStatus(HttpStatus.UNAUTHORIZED)
+                .message("Authentication failed: " + e.getLocalizedMessage())
+                .build();
+        return new ResponseEntity<>(apiError, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(JwtException.class)
+    public ResponseEntity<ApiError> handleJwtException(JwtException e){
+        ApiError apiError =  ApiError.builder()
+                .message(e.getLocalizedMessage())
+                .httpStatus(HttpStatus.UNAUTHORIZED)
+                .build();
+        return new ResponseEntity<>(apiError,HttpStatus.UNAUTHORIZED);
     }
 }

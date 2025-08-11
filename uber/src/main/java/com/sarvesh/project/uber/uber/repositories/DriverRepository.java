@@ -1,12 +1,15 @@
 package com.sarvesh.project.uber.uber.repositories;
 
 import com.sarvesh.project.uber.uber.entities.Driver;
+import com.sarvesh.project.uber.uber.entities.User;
 import org.locationtech.jts.geom.Point;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 
 public interface DriverRepository extends JpaRepository<Driver,Long> {
     @Query(value = """
@@ -31,4 +34,6 @@ public interface DriverRepository extends JpaRepository<Driver,Long> {
     List<Driver> findNearestByTopRatedDrivers(
             @Param("pickupLocation") Point pickupLocation
     );
+
+    Optional<Driver> findByUser(User user);
 }
