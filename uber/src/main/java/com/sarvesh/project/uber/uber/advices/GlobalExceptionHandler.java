@@ -5,11 +5,13 @@ import com.sarvesh.project.uber.uber.exceptions.RuntimeConflictException;
 import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.naming.AuthenticationException;
+import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,6 +36,17 @@ public class GlobalExceptionHandler {
                 .message(ex.getMessage())
                 .build();
         return ResponseEntity.status(HttpStatus.CONFLICT).body(apiError);
+    }
+
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ApiError> handleBadCredentialsException(BadCredentialsException e) {
+        ApiError apiError = ApiError
+                .builder()
+                .httpStatus(HttpStatus.UNAUTHORIZED)
+                .message("Invalid email or password")
+                .build();
+        return new ResponseEntity<>(apiError, HttpStatus.UNAUTHORIZED);
     }
 
 
@@ -81,5 +94,14 @@ public class GlobalExceptionHandler {
                 .httpStatus(HttpStatus.UNAUTHORIZED)
                 .build();
         return new ResponseEntity<>(apiError,HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    private ResponseEntity<ApiError> handleAccessDeniedException(AccessDeniedException ex) {
+        ApiError apiError = ApiError.builder()
+                .httpStatus(HttpStatus.FORBIDDEN)
+                .message("Access Denied: You don't have permission to access this resource")
+                .build();
+        return new ResponseEntity<>(apiError, HttpStatus.FORBIDDEN);
     }
 }

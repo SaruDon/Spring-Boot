@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -22,6 +23,9 @@ import java.io.IOException;
 
 @Configuration
 @RequiredArgsConstructor
+@EnableMethodSecurity(
+        securedEnabled = true
+)
 public class JwtAuthFilter extends OncePerRequestFilter {
 
 
@@ -36,7 +40,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
             final String requestTokenHeader = request.getHeader("Authorization");
-            if (requestTokenHeader == null || !requestTokenHeader.startsWith("Bearer")) {
+            if (requestTokenHeader == null || !requestTokenHeader.startsWith("Bearer ")) {
                 filterChain.doFilter(request,response);
                 return;
             }
@@ -45,6 +49,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
             if (userId !=null && SecurityContextHolder.getContext().getAuthentication() ==null){
                 User user= userService.getUserById(userId);
+                System.out.println("User roles: " + user.getRole()); // Expect [ADMIN, RIDER]
                 UsernamePasswordAuthenticationToken authenticationToken =
                         new UsernamePasswordAuthenticationToken(user,null,user.getAuthorities());
                 authenticationToken.setDetails(

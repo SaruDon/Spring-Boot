@@ -37,41 +37,43 @@ public class RiderServiceImpl implements RiderService {
 
     private final RideStrategyManager rideStrategyManager;
 
-    Logger log = LoggerFactory.getLogger(RiderServiceImpl.class);
+    Logger logger = LoggerFactory.getLogger(RiderServiceImpl.class);
 
 
     @Override
     @Transactional
     public RideRequestDto requestRide(RideRequestDto rideRequestDto) {
         // Get current rider
+        System.out.println(":Iam here");
+        logger.debug("Start service");
         Rider rider = getCurrentRider();
-        log.debug("Got Rider: {}", rider);
+        logger.debug("Got Rider: {}", rider);
 
         // Map DTO to entity
         RideRequest rideRequest = modelMapper.map(rideRequestDto, RideRequest.class);
-        log.debug("Converted to rideRequest: {}", rideRequest);
+        logger.debug("Converted to rideRequest: {}", rideRequest);
 
         // Set the rider (this was missing!)
         rideRequest.setRider(rider);
-        log.debug("Set rider on request: {}", rideRequest.getRider());
+        logger.debug("Set rider on request: {}", rideRequest.getRider());
 
 
         // Update status
         rideRequest.setRideRequestStatus(RideRequestStatus.PENDING);
-        log.debug("Ride status updated: {}", rideRequest.getRideRequestStatus());
+        logger.debug("Ride status updated: {}", rideRequest.getRideRequestStatus());
 
         // Calculate fare
         Double fare = rideStrategyManager.rideFareCalculationStrategy().calculateFare(rideRequest);
-        log.debug("Calculated fare: {}", fare);
+        logger.debug("Calculated fare: {}", fare);
 
         rideRequest.setFare(fare);
-        log.debug("Set ride request fare: {}", rideRequest.getFare());
+        logger.debug("Set ride request fare: {}", rideRequest.getFare());
 
         // Save the ride request
-        log.debug("To be Saved rider on request: {}", rideRequest);
+        logger.debug("To be Saved rider on request: {}", rideRequest);
         RideRequest savedRideRequest = rideRequestService.createNewRideRequest(rideRequest);
-        log.debug("Successfully saved ride request with ID: {}", savedRideRequest.getId());
-        log.debug("Saved ride request details: {}", savedRideRequest);
+        logger.debug("Successfully saved ride request with ID: {}", savedRideRequest.getId());
+        logger.debug("Saved ride request details: {}", savedRideRequest);
 
         List<Driver> drivers = rideStrategyManager.driverMatchingStrategy(rider.getRating()).findDriverMatchingStrategy(rideRequest);
         drivers.forEach(driver -> {
@@ -143,6 +145,7 @@ public class RiderServiceImpl implements RiderService {
     public Rider getCurrentRider() {
         //Todo; implement sting security
         User user =(User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        logger.debug("name>"+user.getName().toString());
         return riderRepository.findByUser(user).orElseThrow(()-> new ResourceNotFoundException("Rider not associated with user with id:"+ user.getId()));
     }
 

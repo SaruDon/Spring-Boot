@@ -16,8 +16,10 @@ import com.sarvesh.project.uber.uber.services.WalletService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,16 +45,22 @@ public class AuthServiceImp implements AuthService {
 
     @Override
     public String[] login(String email, String password) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(email, password)
+            );
+            User user = (User) authentication.getPrincipal();
 
-        Authentication  authentication =authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email,password));
-        User user =(User)  authentication.getPrincipal();
+            String accessToken = jwtService.generateAccessToken(user);
+            String refreshToken = jwtService.refreshToken(user);
 
-        String accessToken = jwtService.generateAccessToken(user);
-        String refreshToken = jwtService.refreshToken(user);
+            return new String[]{accessToken, refreshToken};
 
-        String token [] = {accessToken,refreshToken};
-
-        return token;
+        } catch (BadCredentialsException e) {
+            throw new BadCredentialsException("Invalid email or password");
+        } catch (AuthenticationException e) {
+            throw new AuthenticationException("Authentication failed: " + e.getMessage()) {};
+        }
     }
 
     @Override
@@ -81,23 +89,24 @@ public class AuthServiceImp implements AuthService {
     }
 
     @Override
-    public DriverDto onBoardDriver(Long userId,String vehicleId) {
-        User user = userRepository.findById(userId).orElseThrow(()-> new RuntimeConflictException("User with id"+userId+"not found"));
+    public DriverDto onBoardDriver(Long userId, String vehicleId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeConflictException("User with id " + userId + " not found"));
 
-        if (!user.getRole().equals(Role.DRIVER)){
-            throw new RuntimeException("Unauthorized");
+        if (user.getRole().contains(Role.DRIVER)) {
+            throw new RuntimeException("User is already a driver");
         }
 
         Driver driver = driverService.onBoardNewDriver(
-            Driver
-                    .builder()
-                    .rating(0.0D)
-                    .vehicleId(vehicleId)
-                    .available(true)
-                    .build()
+                Driver.builder()
+                        .rating(0.0D)
+                        .vehicleId(vehicleId)
+                        .available(true)
+                        .build()
         );
+
         user.getRole().add(Role.DRIVER);
         userRepository.save(user);
-        return modelMapper.map(driver,DriverDto.class);
+        return modelMapper.map(driver, DriverDto.class);
     }
 }
