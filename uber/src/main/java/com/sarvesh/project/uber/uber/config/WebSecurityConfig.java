@@ -16,23 +16,24 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-@EnableMethodSecurity(securedEnabled = true)
+@EnableMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class WebSecurityConfig {
 
-    private static final String[] PUBLIC_ROUTES={"/auth/**"};
+    private static final String[] PUBLIC_ROUTES={"/auth/**"}; // routes which can be access without authentication
     private final JwtAuthFilter jwtAuthFilter;
 
 
+    //security filter chain
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
         httpSecurity.sessionManagement(sessionConfig -> sessionConfig.
-                sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // making session stateless
                 .csrf(csrf-> csrf.disable())
                 .authorizeHttpRequests(auth-> auth
                         .requestMatchers(PUBLIC_ROUTES).permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().authenticated() //authorized request
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 

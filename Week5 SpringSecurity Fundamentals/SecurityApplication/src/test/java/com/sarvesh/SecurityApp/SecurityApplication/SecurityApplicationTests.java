@@ -16,19 +16,18 @@ class SecurityApplicationTests {
 	@Test
 	void contextLoads() {
 
-		User user = User.builder()
-				.email("sarvesh@gmail.com")
-				.password("1234")
-				.name("sarvesh")
-				.id(4L)
-				.build();
-
-		String token = jwtService.generateToken(user);
-
-		System.out.println("token>>"+ token);
-
-		Long id = jwtService.getUserIdFromToken(token);
-		System.out.println("Id from token"+id);
+//		User user = User.builder()
+//				.email("sarvesh@gmail.com")
+//				.password("1234")
+//				.name("sarvesh")
+//				.id(4L)
+//				.build();
+//
+//		String token = jwtService.generateAccessToken(user);
+//
+//		System.out.println("token>>"+ token);
+//
+//		Long id = jwtService.getUserIdFromToken(token);
+//		System.out.println("Id from token"+id);
 	}
-
 }

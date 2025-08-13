@@ -32,7 +32,8 @@ public class RiderController {
     @PostMapping("/requestRide")
     private ResponseEntity<RideRequestDto> requestRide(@RequestBody RideRequestDto rideRequestDto){
         logger.debug("requestRIde called"+rideRequestDto);
-        return new ResponseEntity<>(riderService.requestRide(rideRequestDto), HttpStatus.CREATED);
+        RideRequestDto requestDto = riderService.requestRide(rideRequestDto);
+        return new ResponseEntity<>(requestDto, HttpStatus.CREATED);
     }
 
     @PatchMapping("/cancelRide/{rideId}")
