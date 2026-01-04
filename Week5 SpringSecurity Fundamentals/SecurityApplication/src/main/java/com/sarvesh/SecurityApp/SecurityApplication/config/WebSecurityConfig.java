@@ -1,76 +1,59 @@
 package com.sarvesh.SecurityApp.SecurityApplication.config;
 
 import com.sarvesh.SecurityApp.SecurityApplication.filter.JwtAuthFilter;
-import com.sarvesh.SecurityApp.SecurityApplication.filter.LoggingFilter;
+import com.sarvesh.SecurityApp.SecurityApplication.handlers.Oauth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
-    private final LoggingFilter loggingFilter;
+    private final Oauth2SuccessHandler oAuth2SuccessHandler;
+
+    private static final String[] publicRoutes = {
+            "/error",
+            "/auth/**",
+            "/home.html",
+            "/login/**",
+            "/oauth2/**"  // Add OAuth2 related paths
+    };
 
     @Bean
-    SecurityFilterChain securityFilterChain (HttpSecurity httpSecurity) throws Exception{
+    SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .authorizeHttpRequests(auth->
-                        auth
-                                .requestMatchers("/post","/auth/**").permitAll()
-//                                .requestMatchers("/post/**").hasAnyRole("ADMIN")
-                                .anyRequest()
-                                .authenticated()
-                )
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(publicRoutes).permitAll()
+                        .requestMatchers("/posts/**").authenticated()
+                        .anyRequest().authenticated())
                 .csrf(csrfConfig -> csrfConfig.disable())
-                .sessionManagement(sessionConfig->sessionConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .sessionManagement(sessionConfig -> sessionConfig
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(loggingFilter,UsernamePasswordAuthenticationFilter.class);
-//                .formLogin(Customizer.withDefaults());
+                .oauth2Login(oauth2Config -> oauth2Config
+                        .loginPage("/login")  // Optional: specify custom login page
+                        .failureUrl("/login?error=true")
+                        .successHandler(oAuth2SuccessHandler)
+                        .permitAll()
+                );
 
-        return  httpSecurity.build();
+        return httpSecurity.build();
     }
-
-
-
 
     @Bean
-    AuthenticationManager authenticationManager (AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
+    AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
     }
-//
-//    @Bean
-//    UserDetailsService myInMemoryuserDetailsService(){
-//        UserDetails normalUser = User
-//                .withUsername("saru")
-//                .password(passwordEncoder().encode("saru"))
-//                .roles("USER")
-//                .build();
-//
-//        UserDetails adminUser = User
-//                .withUsername("sarvesh")
-//                .password(passwordEncoder().encode("saru"))
-//                .roles("ADMIN")
-//                .build();
-//        return new InMemoryUserDetailsManager(normalUser,adminUser);
-
-//    }
-
 }

@@ -28,7 +28,7 @@ public class AuthService {
             User user = (User) authentication.getPrincipal();
             String accessToken  = jwtService.generateAccessToken(user);
             String refreshToken  = jwtService.generateRefreshToken(user);
-            return new LoginResponseDto();
+            return new LoginResponseDto(user.getId(),accessToken,refreshToken);
         }catch (Exception e) {
             // For any other unexpected exceptions, wrap in AuthenticationException
             throw new BadCredentialsException("Authentication failed", e);

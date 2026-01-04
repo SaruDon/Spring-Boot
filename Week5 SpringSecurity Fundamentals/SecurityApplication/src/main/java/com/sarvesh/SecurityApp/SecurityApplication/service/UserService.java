@@ -50,7 +50,17 @@ public class UserService implements UserDetailsService {
         }
     }
 
+
+    public User getUserByEmail(String email){
+        return userRepository.findByEmail(email)
+                .orElse(null);
+    }
+
     public User getUserByUserId(Long userId){
         return userRepository.findById(userId).orElseThrow(()-> new ResourceNotFoundException("user with if"+userId+"not found"));
+    }
+
+    public User save(User newUser){
+        return userRepository.save(newUser);
     }
 }
