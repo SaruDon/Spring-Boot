@@ -6,6 +6,7 @@ import com.example.projection.dto.IPatientInfo;
 import com.example.projection.dto.PatientDto;
 import com.example.projection.entity.Patient;
 import com.example.projection.repository.PatientRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -39,5 +40,15 @@ public class PatientService {
         return patientRepository.getBloodGroupStats();
     }
 
+
+    @Transactional
+    public void patientDelete(Long id){
+         patientRepository.deleteById(id);
+    }
+
+    public PatientDto createPatient(PatientDto patientDto){
+        Patient patientToSave = modelMapper.map(patientDto, Patient.class);
+        return modelMapper.map(patientRepository.save(patientToSave),PatientDto.class);
+    }
 
 }

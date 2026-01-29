@@ -1,6 +1,6 @@
-package com.example.hospital.entity;
+package com.example.projection.entity;
 
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,21 +13,23 @@ import java.util.Set;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @Setter
-public class Room {
-
+@Getter
+public class Rooms {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Integer floor;
+
     private Integer capacity;
 
-    private Boolean availability;
-
-    private Double rentPerDay;
-
-    //patients in room
     @OneToMany(mappedBy = "room")
-    private Set<Patients> patientsSet = new HashSet<>();
+    @JsonBackReference
+    private Set<Patient> patients= new HashSet<>();
+
+
+    @ManyToOne()
+    @JoinColumn(name = "manager_id")
+    private Employee manager;
 }
