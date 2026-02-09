@@ -12,9 +12,11 @@ public interface PostService {
 
     PostDto createNewPost(PostDto postDto);
 
-    PostDto updatePost(PostDto postDto);
+    PostDto updatePost(Long id, PostDto postDto);
 
     PostDto deletePostById(Long id);
 
-    PostDto partialUpdatePost(@PathVariable Long id, @RequestBody Map<String,Object> map)
+    PostDto getPostById(Long id);
+
+    PostDto partialUpdatePost(@PathVariable Long id, @RequestBody Map<String,Object> map);
 }

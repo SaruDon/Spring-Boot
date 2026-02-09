@@ -1,4 +1,27 @@
 package com.example.SpringSecurity54.advice;
 
-public class ApiResponse {
+import lombok.Data;
+
+import java.time.LocalDateTime;
+
+@Data
+public class ApiResponse<T> {
+    private LocalDateTime localDateTime;
+    private  T data;
+    private ApiError apiError;
+
+
+    public ApiResponse(ApiError apiError) {
+        this();
+        this.apiError = apiError;
+    }
+
+    public ApiResponse(T data) {
+        this();
+        this.data = data;
+    }
+
+    public ApiResponse() {
+        this.localDateTime = LocalDateTime.now();
+    }
 }

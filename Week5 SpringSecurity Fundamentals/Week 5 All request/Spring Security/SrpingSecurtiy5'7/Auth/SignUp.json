@@ -1,0 +1,21 @@
+{
+  "name": "SignUp",
+  "request": {
+    "type": "http",
+    "url": "http://localhost:8080/auth/signup",
+    "scripts": {
+      "preRequest": "",
+      "postResponse": ""
+    },
+    "method": "POST",
+    "queryParams": [],
+    "headers": [],
+    "body": "{\n  \"email\": \"sarveshkhamka@hmai.com\",\n  \"password\":\"pass\",\n  \"name\":\"sarvesh\"\n}\n",
+    "contentType": "application/json",
+    "auth": {
+      "currentAuthType": "INHERIT",
+      "authConfigStore": {}
+    },
+    "pathVariables": []
+  }
+}

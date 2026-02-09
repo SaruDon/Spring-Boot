@@ -1,4 +1,12 @@
 package com.example.SpringSecurity57.repostory;
 
-public class UserRepository {
+import com.example.SpringSecurity57.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+
+@Repository
+public interface UserRepository extends JpaRepository<User,Long> {
+    Optional<User> findByEmail(String email);
 }

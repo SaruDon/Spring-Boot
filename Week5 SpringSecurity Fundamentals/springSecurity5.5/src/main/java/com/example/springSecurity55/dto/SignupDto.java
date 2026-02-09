@@ -1,10 +1,12 @@
-package com.example.springSecurity55.entity;
+package com.example.springSecurity55.dto;
 
 import lombok.Data;
 
 @Data
 public class SignupDto {
     private String email;
-    private String pass;
+
+    private String password;
+
     private String name;
 }
