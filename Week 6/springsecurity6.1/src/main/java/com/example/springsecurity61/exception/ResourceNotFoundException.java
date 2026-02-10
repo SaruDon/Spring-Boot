@@ -1,4 +1,8 @@
 package com.example.springsecurity61.exception;
 
-public class ResourcenotFoundException {
+
+public class ResourceNotFoundException extends RuntimeException{
+    public ResourceNotFoundException(String message) {
+        super(message);
+    }
 }

@@ -1,7 +1,7 @@
 package com.example.SpringSecurity57.service;
 
 import com.example.SpringSecurity57.dto.LoginDto;
-import com.example.SpringSecurity57.dto.UserDto;
+import com.example.SpringSecurity57.dto.LoginResponseDto;
 import com.example.SpringSecurity57.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,7 +16,7 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public String login(LoginDto loginDto){
+    public LoginResponseDto login(LoginDto loginDto){
 
         try{
             Authentication authentication = authenticationManager
@@ -29,11 +29,18 @@ public class AuthService {
 
             User user = (User) authentication.getPrincipal();
 
-            return jwtService.generateToken(user);
+            String accessToken = jwtService.generateAccessToken(user);
+            String refreshToken = jwtService.generateRefreshToken(user);
+
+
+
+            return new LoginResponseDto(user.getId(),accessToken,refreshToken);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
     }
 
+
+    public LoginResponseDto refresh(String)
 }
