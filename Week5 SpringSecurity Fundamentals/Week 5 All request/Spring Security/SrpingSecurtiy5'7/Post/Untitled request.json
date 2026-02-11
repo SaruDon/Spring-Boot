@@ -2,7 +2,7 @@
   "name": "Untitled request",
   "request": {
     "type": "http",
-    "url": "http://localhost:8080/post/1",
+    "url": "http://localhost:8080/post",
     "scripts": {
       "preRequest": "",
       "postResponse": ""
@@ -15,7 +15,7 @@
       "currentAuthType": "BEARER_TOKEN",
       "authConfigStore": {
         "BEARER_TOKEN": {
-          "bearer": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJzYXJ2ZXNoa2hhbWthQGhtYWkuY29tIiwicm9sZXMiOlsiQURNSU4iLCJVU0VSIl0sImlhdCI6MTc3MDM3MjE0OSwiZXhwIjoxNzcwMzcyMjA5fQ.J6yiHqJs60mTdOTUuveH-DL1Aktc6ACNalE5Zd6WSz0"
+          "bearer": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJzYXJ2ZXNoa2hhbWthQGhtYWkuY29tIiwibmFtZSI6InNhcnZlc2giLCJpYXQiOjE3NzA4MjQ5MDcsImV4cCI6MTc3MDgyNDkxN30.fD31IhzRkL8UmEyPsxvGx0BZUNDyPbgwcf9aMCvLj80"
         }
       }
     },

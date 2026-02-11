@@ -19,5 +19,5 @@ public interface PostService {
 
     PostDto getPostById(Long id);
 
-    PostDto partialUpdate(@PathVariable Long id, @RequestBody Map<String, Objects> updates);
+    PostDto partialUpdate(Long id,Map<String, Objects> updates);
 }
